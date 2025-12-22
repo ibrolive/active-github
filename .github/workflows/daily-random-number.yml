@@ -2,8 +2,8 @@ name: Daily Random Number
 
 on:
   schedule:
-    # Runs every day at 00:00 UTC
-    - cron: '0 0 * * *'
+    # Runs every 5 minutes
+      - cron: '*/5 * * * *'
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
@@ -29,8 +29,8 @@ jobs:
           echo "- $TIMESTAMP: $RANDOM_NUM" >> random-numbers.md
           
           # Configure git
-          git config user.name "ibrolive"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@gmail.com"
           
           # Commit and push
           git add random-numbers.md
