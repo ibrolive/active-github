@@ -1,0 +1,38 @@
+name: Daily Random Number
+
+on:
+  schedule:
+    # Runs every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  commit-random-number:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Generate and commit random number
+        run: |
+          # Generate a random number
+          RANDOM_NUM=$RANDOM
+          
+          # Get current date and time
+          TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S UTC')
+          
+          # Append to random-numbers.md
+          echo "- $TIMESTAMP: $RANDOM_NUM" >> random-numbers.md
+          
+          # Configure git
+          git config user.name "ibrolive"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Commit and push
+          git add random-numbers.md
+          git commit -m "Add random number: $RANDOM_NUM"
+          git push
