@@ -2,7 +2,7 @@ name: Daily Random Number
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 */6 * * *'
 
 jobs:
   commit-random-number:
